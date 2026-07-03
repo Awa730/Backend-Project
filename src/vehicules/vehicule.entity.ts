@@ -1,32 +1,36 @@
 import {
-  Entity, PrimaryGeneratedColumn, Column,
-  CreateDateColumn, UpdateDateColumn, OneToMany,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { Reservation } from '../reservations/reservation.entity';
 
 export enum StatutVehicule {
-  DISPONIBLE  = 'available',
-  LIMITE      = 'limited',
+  DISPONIBLE = 'available',
+  LIMITE = 'limited',
   INDISPONIBLE = 'unavailable',
 }
 
 export enum Carburant {
-  ESSENCE    = 'Essence',
-  DIESEL     = 'Diesel',
+  ESSENCE = 'Essence',
+  DIESEL = 'Diesel',
   ELECTRIQUE = 'Électrique',
-  HYBRIDE    = 'Hybride',
+  HYBRIDE = 'Hybride',
 }
 
 export enum Boite {
-  MANUELLE    = 'Manuelle',
+  MANUELLE = 'Manuelle',
   AUTOMATIQUE = 'Automatique',
 }
 
 export enum Categorie {
-  SUV      = 'SUV',
-  BERLINE  = 'Berline',
-  LUXE     = 'Luxe',
-  SPORT    = 'Sport',
+  SUV = 'SUV',
+  BERLINE = 'Berline',
+  LUXE = 'Luxe',
+  SPORT = 'Sport',
   SUPERCAR = 'Supercar',
   UTILITAIRE = 'Utilitaire',
   CITADINE = 'Citadine',
@@ -81,7 +85,11 @@ export class Vehicule {
   @Column({ nullable: true })
   image: string;
 
-  @Column({ type: 'enum', enum: StatutVehicule, default: StatutVehicule.DISPONIBLE })
+  @Column({
+    type: 'enum',
+    enum: StatutVehicule,
+    default: StatutVehicule.DISPONIBLE,
+  })
   statut: StatutVehicule;
 
   @Column({ type: 'simple-array', nullable: true })

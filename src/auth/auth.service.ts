@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  OnModuleInit,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
@@ -15,15 +19,15 @@ export class AuthService implements OnModuleInit {
 
   // Crée le super admin au démarrage
   async onModuleInit() {
-    const adminExiste = await this.usersService.findByEmail('admin@movia.sn');
+    const adminExiste = await this.usersService.findByEmail('movia@automobile.com');
     if (!adminExiste) {
       await this.usersService.create(
         'Super Admin',
-        'admin@movia.sn',
-        'Admin@2026',
+        'movia@automobile.com',
+        'admin123',
         Role.ADMIN,
       );
-      console.log('✅ Super Admin créé : admin@movia.sn / Admin@2026');
+      console.log('✅ Super Admin créé : movia@automobile.com / admin123');
     }
   }
 
@@ -53,10 +57,15 @@ export class AuthService implements OnModuleInit {
   // Connexion
   async login(dto: LoginDto) {
     const user = await this.usersService.findByEmail(dto.email);
-    if (!user) throw new UnauthorizedException('Email ou mot de passe incorrect');
+    if (!user)
+      throw new UnauthorizedException('Email ou mot de passe incorrect');
 
-    const motDePasseValide = await bcrypt.compare(dto.motDePasse, user.motDePasse);
-    if (!motDePasseValide) throw new UnauthorizedException('Email ou mot de passe incorrect');
+    const motDePasseValide = await bcrypt.compare(
+      dto.motDePasse,
+      user.motDePasse,
+    );
+    if (!motDePasseValide)
+      throw new UnauthorizedException('Email ou mot de passe incorrect');
 
     const token = this.genererToken(user.id, user.email, user.role);
 
@@ -89,6 +98,6 @@ export class AuthService implements OnModuleInit {
   }
 
   private genererToken(id: number, email: string, role: string) {
-    return this.jwtService.sign({ id, email, role });
+    return this.jwtService.sign({ id, email, role: String(role) });
   }
 }

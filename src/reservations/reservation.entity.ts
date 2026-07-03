@@ -1,30 +1,35 @@
 import {
-  Entity, PrimaryGeneratedColumn, Column,
-  CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from '../users/users.entity';
 import { Vehicule } from '../vehicules/vehicule.entity';
 
 export enum TypeReservation {
   LOCATION = 'location',
-  ACHAT    = 'achat',
+  ACHAT = 'achat',
 }
 
 export enum StatutReservation {
   EN_ATTENTE = 'En attente',
-  CONFIRMEE  = 'Confirmée',
-  EN_COURS   = 'En cours',
-  TERMINEE   = 'Terminée',
-  ANNULEE    = 'Annulée',
+  CONFIRMEE = 'Confirmée',
+  EN_COURS = 'En cours',
+  TERMINEE = 'Terminée',
+  ANNULEE = 'Annulée',
 }
 
 export enum ModePaiement {
-  WAVE         = 'wave',
+  WAVE = 'wave',
   ORANGE_MONEY = 'orange-money',
-  FREE_MONEY   = 'free-money',
-  CARTE        = 'carte',
-  VIREMENT     = 'virement',
-  ESPECES      = 'especes',
+  FREE_MONEY = 'free-money',
+  CARTE = 'carte',
+  VIREMENT = 'virement',
+  ESPECES = 'especes',
 }
 
 @Entity('reservations')
@@ -39,7 +44,11 @@ export class Reservation {
   @Column({ type: 'enum', enum: TypeReservation })
   type: TypeReservation;
 
-  @Column({ type: 'enum', enum: StatutReservation, default: StatutReservation.EN_ATTENTE })
+  @Column({
+    type: 'enum',
+    enum: StatutReservation,
+    default: StatutReservation.EN_ATTENTE,
+  })
   statut: StatutReservation;
 
   // Infos client au moment de la réservation (nom, tel, email dupliqués pour historique)
@@ -83,7 +92,10 @@ export class Reservation {
   @Column({ default: false })
   whatsappEnvoye: boolean;
 
-  @ManyToOne(() => User, (u) => u.reservations, { nullable: true, eager: false })
+  @ManyToOne(() => User, (u) => u.reservations, {
+    nullable: true,
+    eager: false,
+  })
   @JoinColumn({ name: 'user_id' })
   user: User | null;
 

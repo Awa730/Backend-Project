@@ -1,10 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsArray, IsEnum, IsNotEmpty, IsNumber,
-  IsOptional, IsString, Min,
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
 } from 'class-validator';
-import { Boite, Carburant, Categorie, StatutVehicule } from '../vehicule.entity';
-import { PartialType } from '@nestjs/swagger';
+import {
+  Boite,
+  Carburant,
+  Categorie,
+  StatutVehicule,
+} from '../vehicule.entity';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateVehiculeDto {
   @ApiProperty({ example: 'BMW X3' })
@@ -78,7 +88,10 @@ export class CreateVehiculeDto {
   @IsEnum(StatutVehicule)
   statut?: StatutVehicule;
 
-  @ApiProperty({ example: ['Confort premium', 'Tenue de route'], required: false })
+  @ApiProperty({
+    example: ['Confort premium', 'Tenue de route'],
+    required: false,
+  })
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
