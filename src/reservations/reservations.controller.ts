@@ -1,11 +1,28 @@
 import {
-  Controller, Get, Post, Put, Delete, Patch,
-  Param, Body, Query, UseGuards, ParseIntPipe, Request,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Patch,
+  Param,
+  Body,
+  Query,
+  UseGuards,
+  ParseIntPipe,
+  Request,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { ReservationsService } from './reservations.service';
 import {
-  CreateReservationDto, UpdateStatutDto, ValiderPaiementDto,
+  CreateReservationDto,
+  UpdateStatutDto,
+  ValiderPaiementDto,
 } from './dto/reservation.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -22,7 +39,10 @@ export class ReservationsController {
 
   // ── CLIENT : Créer une réservation ─────────────────────────────────────────
   @Post()
-  @ApiOperation({ summary: 'Créer une réservation location ou achat (client connecté ou public)' })
+  @ApiOperation({
+    summary:
+      'Créer une réservation location ou achat (client connecté ou public)',
+  })
   create(@Body() dto: CreateReservationDto, @Request() req) {
     return this.reservationsService.create(dto, req.user);
   }
@@ -36,7 +56,9 @@ export class ReservationsController {
 
   // ── CLIENT : Valider paiement ──────────────────────────────────────────────
   @Patch(':id/paiement')
-  @ApiOperation({ summary: 'Soumettre un paiement Wave / OM / Free Money / Carte (client)' })
+  @ApiOperation({
+    summary: 'Soumettre un paiement Wave / OM / Free Money / Carte (client)',
+  })
   validerPaiement(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: ValiderPaiementDto,
@@ -69,7 +91,7 @@ export class ReservationsController {
 
   // ── ADMIN/CLIENT : Voir une réservation ───────────────────────────────────
   @Get(':id')
-  @ApiOperation({ summary: 'Détail d\'une réservation' })
+  @ApiOperation({ summary: "Détail d'une réservation" })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.reservationsService.findOne(id);
   }
@@ -78,7 +100,10 @@ export class ReservationsController {
   @Patch(':id/statut')
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN)
-  @ApiOperation({ summary: 'Changer statut réservation (Admin) → Confirmée, En cours, Terminée, Annulée' })
+  @ApiOperation({
+    summary:
+      'Changer statut réservation (Admin) → Confirmée, En cours, Terminée, Annulée',
+  })
   updateStatut(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateStatutDto,

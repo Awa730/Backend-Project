@@ -1,8 +1,21 @@
 import {
-  Controller, Get, Post, Put, Delete,
-  Param, Body, Query, UseGuards, ParseIntPipe,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Body,
+  Query,
+  UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { VehiculesService } from './vehicules.service';
 import { CreateVehiculeDto, UpdateVehiculeDto } from './dto/vehicule.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -26,14 +39,16 @@ export class VehiculesController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Lister les véhicules — public, filtre statut optionnel' })
+  @ApiOperation({
+    summary: 'Lister les véhicules — public, filtre statut optionnel',
+  })
   @ApiQuery({ name: 'statut', enum: StatutVehicule, required: false })
   findAll(@Query('statut') statut?: StatutVehicule) {
     return this.vehiculesService.findAll(statut);
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Détail d\'un véhicule — public' })
+  @ApiOperation({ summary: "Détail d'un véhicule — public" })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.vehiculesService.findOne(id);
   }
@@ -43,7 +58,10 @@ export class VehiculesController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Modifier un véhicule (Admin)' })
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateVehiculeDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateVehiculeDto,
+  ) {
     return this.vehiculesService.update(id, dto);
   }
 

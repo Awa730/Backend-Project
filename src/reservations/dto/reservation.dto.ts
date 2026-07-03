@@ -1,9 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsDateString, IsEmail, IsEnum, IsNotEmpty,
-  IsNumber, IsOptional, IsString,
+  IsDateString,
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
 } from 'class-validator';
-import { ModePaiement, StatutReservation, TypeReservation } from '../reservation.entity';
+import {
+  ModePaiement,
+  StatutReservation,
+  TypeReservation,
+} from '../reservation.entity';
 
 export class CreateReservationDto {
   @ApiProperty({ enum: TypeReservation, example: TypeReservation.LOCATION })

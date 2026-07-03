@@ -1,8 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Reservation } from '../reservations/reservation.entity';
 
 export enum Role {
-  ADMIN  = 'admin',
+  ADMIN = 'admin',
   CLIENT = 'client',
 }
 

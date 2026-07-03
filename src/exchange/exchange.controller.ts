@@ -18,7 +18,8 @@ export class ExchangeController {
   @Get('convert')
   @ApiOperation({
     summary: 'Convertir un montant FCFA en plusieurs devises',
-    description: 'Exemple : /exchange/convert?montant=25000000 → prix d\'un véhicule en EUR/USD',
+    description:
+      "Exemple : /exchange/convert?montant=25000000 → prix d'un véhicule en EUR/USD",
   })
   @ApiQuery({
     name: 'montant',

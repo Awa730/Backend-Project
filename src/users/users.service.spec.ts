@@ -1,4 +1,8 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User, Role } from './users.entity';
@@ -11,7 +15,12 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(nom: string, email: string, motDePasse: string, role?: Role): Promise<User> {
+  async create(
+    nom: string,
+    email: string,
+    motDePasse: string,
+    role?: Role,
+  ): Promise<User> {
     const existant = await this.usersRepository.findOne({ where: { email } });
     if (existant) throw new ConflictException('Cet email est déjà utilisé');
 
