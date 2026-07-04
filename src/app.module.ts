@@ -7,7 +7,6 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 
 // Modules
-import { VehiclesModule } from './vehicles/vehicles.module';
 import { VehiculesModule } from './vehicules/vehicules.module';
 import { ReservationsModule } from './reservations/reservations.module';
 import { ClientsModule } from './clients/clients.module';
@@ -44,7 +43,6 @@ import { Reservation } from './reservations/reservation.entity';
     UsersModule,
 
     // Modules
-    VehiclesModule,
     VehiculesModule,
     ReservationsModule,
     ClientsModule,

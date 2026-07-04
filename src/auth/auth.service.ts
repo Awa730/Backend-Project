@@ -61,7 +61,7 @@ export class AuthService implements OnModuleInit {
       throw new UnauthorizedException('Email ou mot de passe incorrect');
 
     const motDePasseValide = await bcrypt.compare(
-      dto.motDePasse,
+      dto.password,
       user.motDePasse,
     );
     if (!motDePasseValide)
