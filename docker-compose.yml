@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+
+  # ── Base de données MySQL ─────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: movia_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: movia2026
+      MYSQL_DATABASE: movia_db
+      MYSQL_USER: movia_user
+      MYSQL_PASSWORD: movia2026
+    ports:
+      - "3307:3306"   # Port 3307 pour ne pas conflicter avec XAMPP
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - movia_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Backend NestJS ────────────────────────────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: movia_backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: movia_user
+      DB_PASSWORD: movia2026
+      DB_NAME: movia_db
+      JWT_SECRET: movia_jwt_secret_key_2026_super_securise
+      JWT_EXPIRES_IN: 7d
+      PORT: 3000
+      FRONTEND_URL: http://localhost:5173
+      NODE_ENV: production
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - movia_network
+
+# ── Volumes persistants ───────────────────────────────────
+volumes:
+  mysql_data:
+    driver: local
+
+# ── Réseau interne ────────────────────────────────────────
+networks:
+  movia_network:
+    driver: bridge
